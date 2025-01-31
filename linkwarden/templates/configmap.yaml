@@ -6,14 +6,10 @@ metadata:
     {{- include "linkwarden.labels" . | nindent 4 }}
 data:
   NEXTAUTH_URL: "http://localhost:3000/api/v1/auth"
-  NEXTAUTH_SECRET: ""
-
   # Manual installation database settings
   DATABASE_URL: ""
-
   # Docker installation database settings
   POSTGRES_PASSWORD: ""
-
   # Additional Optional Settings
   PAGINATION_TAKE_COUNT: "{{ .Values.configuration.paginationTakeCount }}"
   STORAGE_FOLDER: "{{ .Values.configuration.storageFolder }}"

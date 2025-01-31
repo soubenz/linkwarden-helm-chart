@@ -33,18 +33,25 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "linkwarden.fullname" . }}-config
           env:
             - name: DATABASE_URL
-              value: {{ if .Values.postgres.external.enabled }}
-                "postgresql://{{ .Values.postgres.external.username }}:{{ .Values.postgres.external.password }}@{{ .Values.postgres.external.host }}:{{ .Values.postgres.external.port }}/{{ .Values.postgres.external.database }}"
-              {{ else }}
+              {{ if .Values.postgres.enabled }}
+              value: 
                 "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
-              {{ end }}
-            - name: CONFIG_KEY
+              {{ else }}
               valueFrom:
-                configMapKeyRef:
-                  name: {{ include "linkwarden.fullname" . }}-config
-                  key: key
+                secretKeyRef:
+                  name: {{ include "linkwarden.fullname" . }}-secret
+                  key: externalPostgresUri
+              {{ end }}
+            - name: AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "linkwarden.fullname" . }}-secret
+                  key: authSecret
           ports:
             - name: http
               containerPort: 3000
