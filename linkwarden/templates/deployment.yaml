@@ -33,10 +33,25 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              value: {{ if .Values.postgres.external.enabled }}
+                "postgresql://{{ .Values.postgres.external.username }}:{{ .Values.postgres.external.password }}@{{ .Values.postgres.external.host }}:{{ .Values.postgres.external.port }}/{{ .Values.postgres.external.database }}"
+              {{ else }}
+                "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
+              {{ end }}
+            - name: CONFIG_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "linkwarden.fullname" . }}-config
+                  key: key
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 3000
               protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /data/data
           livenessProbe:
             httpGet:
               path: /
@@ -47,6 +62,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

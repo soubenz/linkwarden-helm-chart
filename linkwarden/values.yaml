@@ -5,10 +5,24 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: ghcr.io/linkwarden/linkwarden
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
+
+postgres:
+  enabled: true
+  host: "postgres"
+  port: 5432
+  username: "postgres"
+  password: "" # Set this to the actual password
+  database: "postgres"
+  external:
+    enabled: false
+    host: ""
+    port: 5432
+    username: ""
+    password: ""
+    database: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -80,3 +94,350 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+configuration:
+
+  paginationTakeCount: ""
+  storageFolder: ""
+  autoscrollTimeout: ""
+  publicDisableRegistration: ""
+  publicCredentialsEnabled: ""
+  disableNewSSOUsers: ""
+  reArchiveLimit: ""
+  maxLinksPerUser: ""
+  archiveTakeCount: ""
+  browserTimeout: ""
+  ignoreUnauthorizedCA: ""
+  ignoreHttpsErrors: ""
+  ignoreUrlSizeLimit: ""
+  PublicDemo: ""
+  PublicDemoUsername: ""
+  PublicDemoPassword: ""
+  PublicAdmin: ""
+  PublicMaxFileBuffer: ""
+  monolithMaxBuffer: ""
+  monolithCustomOptions: ""
+  pdfMaxBuffer: ""
+  screenshotMaxBuffer: ""
+  readabilityMaxBuffer: ""
+  previewMaxBuffer: ""
+  importLimit: ""
+  playwrightLaunchOptionsExecutablePath: ""
+  maxWorkers: ""
+  disablePreservation: ""
+  PublicRssPollingIntervalMinutes: ""
+  rssSubscriptionLimitPerUser: ""
+
+  sso:
+    enabled: false
+    apple:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    atlassian:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      scope: ""
+    auth0:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    authelia:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      wellknownUrl: ""
+    authentik:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    azureAdB2C:
+      enabled: false
+      tenantName: ""
+      clientId: ""
+      clientSecret: ""
+      primaryUserFlow: ""
+    azureAd:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      tenantId: ""
+    battlenet:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    box:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    bungie:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      apiKey: ""
+    cognito:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    coinbase:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    discord:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    dropbox:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    duendeIds6:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    eveonline:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    facebook:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    faceit:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    foursquare:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      apiVersion: ""
+    freshbooks:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    fusionauth:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+      tenantId: ""
+    github:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    gitlab:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    google:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    hubspot:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    ids4:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    kakao:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    keycloak:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    line:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    linkedin:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    mailchimp:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    mailru:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    naver:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    netlify:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    okta:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    onelogin:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    osso:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    osu:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    patreon:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    pinterest:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    pipedrive:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    reddit:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    salesforce:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    slack:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    spotify:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    strava:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    todoist:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    twitch:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    unitedEffects:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    vk:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    wikimedia:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    wordpress:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    yandex:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    zitadel:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+      issuer: ""
+    zoho:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+    zoom:
+      enabled: false
+      clientId: ""
+      clientSecret: ""
+      customName: ""
+  authentication:
+    disableRegistration: false
+    PublicCredentialsEnabled: true
+    disableNewSSOUsers: true
+    authURL: ""
+    authSecret: ""
+  smtp:
+
+  
+  ai:
+    enabled: false
+    ollamaEndpointUrl: ""
+    ollamaModel: ""

@@ -1,0 +1,490 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "linkwarden.fullname" . }}-config
+  labels:
+    {{- include "linkwarden.labels" . | nindent 4 }}
+data:
+  NEXTAUTH_URL: "http://localhost:3000/api/v1/auth"
+  NEXTAUTH_SECRET: ""
+
+  # Manual installation database settings
+  DATABASE_URL: ""
+
+  # Docker installation database settings
+  POSTGRES_PASSWORD: ""
+
+  # Additional Optional Settings
+  PAGINATION_TAKE_COUNT: "{{ .Values.configuration.paginationTakeCount }}"
+  STORAGE_FOLDER: "{{ .Values.configuration.storageFolder }}"
+  AUTOSCROLL_TIMEOUT: "{{ .Values.configuration.autoscrollTimeout }}"
+  NEXT_PUBLIC_DISABLE_REGISTRATION: "{{ .Values.configuration.publicDisableRegistration }}"
+  NEXT_PUBLIC_CREDENTIALS_ENABLED: "{{ .Values.configuration.publicCredentialsEnabled }}"
+  DISABLE_NEW_SSO_USERS: "{{ .Values.configuration.disableNewSSOUsers }}"
+  RE_ARCHIVE_LIMIT: "{{ .Values.configuration.reArchiveLimit }}"
+  MAX_LINKS_PER_USER: "{{ .Values.configuration.maxLinksPerUser }}"
+  ARCHIVE_TAKE_COUNT: "{{ .Values.configuration.archiveTakeCount }}"
+  BROWSER_TIMEOUT: "{{ .Values.configuration.browserTimeout }}"
+  IGNORE_UNAUTHORIZED_CA: "{{ .Values.configuration.ignoreUnauthorizedCA }}"
+  IGNORE_HTTPS_ERRORS: "{{ .Values.configuration.ignoreHttpsErrors }}"
+  IGNORE_URL_SIZE_LIMIT: "{{ .Values.configuration.ignoreUrlSizeLimit }}"
+  NEXT_PUBLIC_DEMO: "{{ .Values.configuration.publicDemo }}"
+  NEXT_PUBLIC_DEMO_USERNAME: "{{ .Values.configuration.publicDemoUsername }}"
+  NEXT_PUBLIC_DEMO_PASSWORD: "{{ .Values.configuration.publicDemoPassword }}"
+  NEXT_PUBLIC_ADMIN: "{{ .Values.configuration.publicAdmin }}"
+  NEXT_PUBLIC_MAX_FILE_BUFFER: "{{ .Values.configuration.publicMaxFileBuffer }}"
+  MONOLITH_MAX_BUFFER: "{{ .Values.configuration.monolithMaxBuffer }}"
+  MONOLITH_CUSTOM_OPTIONS: "{{ .Values.configuration.monolithCustomOptions }}"
+  PDF_MAX_BUFFER: "{{ .Values.configuration.pdfMaxBuffer }}"
+  SCREENSHOT_MAX_BUFFER: "{{ .Values.configuration.screenshotMaxBuffer }}"
+  READABILITY_MAX_BUFFER: "{{ .Values.configuration.readabilityMaxBuffer }}"
+  PREVIEW_MAX_BUFFER: "{{ .Values.configuration.previewMaxBuffer }}"
+  IMPORT_LIMIT: "{{ .Values.configuration.importLimit }}"
+  PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH: "{{ .Values.configuration.playwrightLaunchOptionsExecutablePath }}"
+  MAX_WORKERS: "{{ .Values.configuration.maxWorkers }}"
+  DISABLE_PRESERVATION: "{{ .Values.configuration.disablePreservation }}"
+  NEXT_PUBLIC_RSS_POLLING_INTERVAL_MINUTES: "{{ .Values.configuration.publicRssPollingIntervalMinutes }}"
+  RSS_SUBSCRIPTION_LIMIT_PER_USER: "{{ .Values.configuration.rssSubscriptionLimitPerUser }}"
+
+  # AI Settings
+  {{- if .Values.configuration.ai.enabled }}
+    NEXT_PUBLIC_OLLAMA_ENDPOINT_URL: "{{ .Values.configuration.ai.ollamaEndpointUrl }}"
+    OLLAMA_MODEL: "{{ .Values.configuration.ai.ollamaModel }}"
+  {{- end }}
+  # AWS S3 Settings
+  SPACES_KEY: ""
+  SPACES_SECRET: ""
+  SPACES_ENDPOINT: ""
+  SPACES_BUCKET_NAME: ""
+  SPACES_REGION: ""
+  SPACES_FORCE_PATH_STYLE: ""
+
+  # SMTP Settings
+  {{- if .Values.configuration.smtp.enabled }}
+    NEXT_PUBLIC_EMAIL_PROVIDER: "{{ .Values.configuration.smtp.emailProvider }}"
+    EMAIL_FROM: "{{ .Values.configuration.smtp.emailFrom }}"
+    EMAIL_SERVER: "{{ .Values.configuration.smtp.emailServer }}"
+    BASE_URL: "{{ .Values.configuration.smtp.baseUrl }}"
+  {{- end }}
+  # Proxy settings
+  PROXY: ""
+  PROXY_USERNAME: ""
+  PROXY_PASSWORD: ""
+  PROXY_BYPASS: ""
+
+  # PDF archive settings
+  PDF_MARGIN_TOP: ""
+  PDF_MARGIN_BOTTOM: ""
+
+  # SSO Providers
+  {{- if .Values.configuration.sso.enabled }}
+      {{- if .Values.configuration.sso.apple.enabled }}
+      NEXT_PUBLIC_APPLE_ENABLED: "true"
+      APPLE_CUSTOM_NAME: "{{ .Values.configuration.sso.apple.customName }}"
+      APPLE_ID: "{{ .Values.configuration.sso.apple.clientId }}"
+      APPLE_SECRET: "{{ .Values.configuration.sso.apple.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.atlassian.enabled }}
+      NEXT_PUBLIC_ATLASSIAN_ENABLED: "true"
+      ATLASSIAN_CUSTOM_NAME: "{{ .Values.configuration.sso.atlassian.customName }}"
+      ATLASSIAN_CLIENT_ID: "{{ .Values.configuration.sso.atlassian.clientId }}"
+      ATLASSIAN_CLIENT_SECRET: "{{ .Values.configuration.sso.atlassian.clientSecret }}"
+      ATLASSIAN_SCOPE: "{{ .Values.configuration.sso.atlassian.scope }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.auth0.enabled }}
+      NEXT_PUBLIC_AUTH0_ENABLED: "true"
+      AUTH0_CUSTOM_NAME: "{{ .Values.configuration.sso.auth0.customName }}"
+      AUTH0_ISSUER: "{{ .Values.configuration.sso.auth0.issuer }}"
+      AUTH0_CLIENT_SECRET: "{{ .Values.configuration.sso.auth0.clientSecret }}"
+      AUTH0_CLIENT_ID: "{{ .Values.configuration.sso.auth0.clientId }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.authelia.enabled }}
+      NEXT_PUBLIC_AUTHELIA_ENABLED: "true"
+      AUTHELIA_CLIENT_ID: "{{ .Values.configuration.sso.authelia.clientId }}"
+      AUTHELIA_CLIENT_SECRET: "{{ .Values.configuration.sso.authelia.clientSecret }}"
+      AUTHELIA_WELLKNOWN_URL: "{{ .Values.configuration.sso.authelia.wellknownUrl }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.authentik.enabled }}
+      NEXT_PUBLIC_AUTHENTIK_ENABLED: "true"
+      AUTHENTIK_CUSTOM_NAME: "{{ .Values.configuration.sso.authentik.customName }}"
+      AUTHENTIK_ISSUER: "{{ .Values.configuration.sso.authentik.issuer }}"
+      AUTHENTIK_CLIENT_ID: "{{ .Values.configuration.sso.authentik.clientId }}"
+      AUTHENTIK_CLIENT_SECRET: "{{ .Values.configuration.sso.authentik.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.azureAdB2C.enabled }}
+      NEXT_PUBLIC_AZURE_AD_B2C_ENABLED: "true"
+      AZURE_AD_B2C_TENANT_NAME: "{{ .Values.configuration.sso.azureAdB2C.tenantName }}"
+      AZURE_AD_B2C_CLIENT_ID: "{{ .Values.configuration.sso.azureAdB2C.clientId }}"
+      AZURE_AD_B2C_CLIENT_SECRET: "{{ .Values.configuration.sso.azureAdB2C.clientSecret }}"
+      AZURE_AD_B2C_PRIMARY_USER_FLOW: "{{ .Values.configuration.sso.azureAdB2C.primaryUserFlow }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.azureAd.enabled }}
+      NEXT_PUBLIC_AZURE_AD_ENABLED: "true"
+      AZURE_AD_CLIENT_ID: "{{ .Values.configuration.sso.azureAd.clientId }}"
+      AZURE_AD_CLIENT_SECRET: "{{ .Values.configuration.sso.azureAd.clientSecret }}"
+      AZURE_AD_TENANT_ID: "{{ .Values.configuration.sso.azureAd.tenantId }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.battlenet.enabled }}
+      NEXT_PUBLIC_BATTLENET_ENABLED: "true"
+      BATTLENET_CUSTOM_NAME: "{{ .Values.configuration.sso.battlenet.customName }}"
+      BATTLENET_CLIENT_ID: "{{ .Values.configuration.sso.battlenet.clientId }}"
+      BATTLENET_CLIENT_SECRET: "{{ .Values.configuration.sso.battlenet.clientSecret }}"
+      BATTLENET_ISSUER: "{{ .Values.configuration.sso.battlenet.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.box.enabled }}
+      NEXT_PUBLIC_BOX_ENABLED: "true"
+      BOX_CUSTOM_NAME: "{{ .Values.configuration.sso.box.customName }}"
+      BOX_CLIENT_ID: "{{ .Values.configuration.sso.box.clientId }}"
+      BOX_CLIENT_SECRET: "{{ .Values.configuration.sso.box.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.bungie.enabled }}
+      NEXT_PUBLIC_BUNGIE_ENABLED: "true"
+      BUNGIE_CUSTOM_NAME: "{{ .Values.configuration.sso.bungie.customName }}"
+      BUNGIE_CLIENT_ID: "{{ .Values.configuration.sso.bungie.clientId }}"
+      BUNGIE_CLIENT_SECRET: "{{ .Values.configuration.sso.bungie.clientSecret }}"
+      BUNGIE_API_KEY: "{{ .Values.configuration.sso.bungie.apiKey }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.cognito.enabled }}
+      NEXT_PUBLIC_COGNITO_ENABLED: "true"
+      COGNITO_CUSTOM_NAME: "{{ .Values.configuration.sso.cognito.customName }}"
+      COGNITO_CLIENT_ID: "{{ .Values.configuration.sso.cognito.clientId }}"
+      COGNITO_CLIENT_SECRET: "{{ .Values.configuration.sso.cognito.clientSecret }}"
+      COGNITO_ISSUER: "{{ .Values.configuration.sso.cognito.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.coinbase.enabled }}
+      NEXT_PUBLIC_COINBASE_ENABLED: "true"
+      COINBASE_CUSTOM_NAME: "{{ .Values.configuration.sso.coinbase.customName }}"
+      COINBASE_CLIENT_ID: "{{ .Values.configuration.sso.coinbase.clientId }}"
+      COINBASE_CLIENT_SECRET: "{{ .Values.configuration.sso.coinbase.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.discord.enabled }}
+      NEXT_PUBLIC_DISCORD_ENABLED: "true"
+      DISCORD_CUSTOM_NAME: "{{ .Values.configuration.sso.discord.customName }}"
+      DISCORD_CLIENT_ID: "{{ .Values.configuration.sso.discord.clientId }}"
+      DISCORD_CLIENT_SECRET: "{{ .Values.configuration.sso.discord.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.dropbox.enabled }}
+      NEXT_PUBLIC_DROPBOX_ENABLED: "true"
+      DROPBOX_CUSTOM_NAME: "{{ .Values.configuration.sso.dropbox.customName }}"
+      DROPBOX_CLIENT_ID: "{{ .Values.configuration.sso.dropbox.clientId }}"
+      DROPBOX_CLIENT_SECRET: "{{ .Values.configuration.sso.dropbox.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.duendeIds6.enabled }}
+      NEXT_PUBLIC_DUENDE_IDS6_ENABLED: "true"
+      DUENDE_IDS6_CUSTOM_NAME: "{{ .Values.configuration.sso.duendeIds6.customName }}"
+      DUENDE_IDS6_CLIENT_ID: "{{ .Values.configuration.sso.duendeIds6.clientId }}"
+      DUENDE_IDS6_CLIENT_SECRET: "{{ .Values.configuration.sso.duendeIds6.clientSecret }}"
+      DUENDE_IDS6_ISSUER: "{{ .Values.configuration.sso.duendeIds6.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.eveonline.enabled }}
+      NEXT_PUBLIC_EVEONLINE_ENABLED: "true"
+      EVEONLINE_CUSTOM_NAME: "{{ .Values.configuration.sso.eveonline.customName }}"
+      EVEONLINE_CLIENT_ID: "{{ .Values.configuration.sso.eveonline.clientId }}"
+      EVEONLINE_CLIENT_SECRET: "{{ .Values.configuration.sso.eveonline.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.facebook.enabled }}
+      NEXT_PUBLIC_FACEBOOK_ENABLED: "true"
+      FACEBOOK_CUSTOM_NAME: "{{ .Values.configuration.sso.facebook.customName }}"
+      FACEBOOK_CLIENT_ID: "{{ .Values.configuration.sso.facebook.clientId }}"
+      FACEBOOK_CLIENT_SECRET: "{{ .Values.configuration.sso.facebook.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.faceit.enabled }}
+      NEXT_PUBLIC_FACEIT_ENABLED: "true"
+      FACEIT_CUSTOM_NAME: "{{ .Values.configuration.sso.faceit.customName }}"
+      FACEIT_CLIENT_ID: "{{ .Values.configuration.sso.faceit.clientId }}"
+      FACEIT_CLIENT_SECRET: "{{ .Values.configuration.sso.faceit.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.foursquare.enabled }}
+      NEXT_PUBLIC_FOURSQUARE_ENABLED: "true"
+      FOURSQUARE_CUSTOM_NAME: "{{ .Values.configuration.sso.foursquare.customName }}"
+      FOURSQUARE_CLIENT_ID: "{{ .Values.configuration.sso.foursquare.clientId }}"
+      FOURSQUARE_CLIENT_SECRET: "{{ .Values.configuration.sso.foursquare.clientSecret }}"
+      FOURSQUARE_APIVERSION: "{{ .Values.configuration.sso.foursquare.apiVersion }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.freshbooks.enabled }}
+      NEXT_PUBLIC_FRESHBOOKS_ENABLED: "true"
+      FRESHBOOKS_CUSTOM_NAME: "{{ .Values.configuration.sso.freshbooks.customName }}"
+      FRESHBOOKS_CLIENT_ID: "{{ .Values.configuration.sso.freshbooks.clientId }}"
+      FRESHBOOKS_CLIENT_SECRET: "{{ .Values.configuration.sso.freshbooks.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.fusionauth.enabled }}
+      NEXT_PUBLIC_FUSIONAUTH_ENABLED: "true"
+      FUSIONAUTH_CUSTOM_NAME: "{{ .Values.configuration.sso.fusionauth.customName }}"
+      FUSIONAUTH_CLIENT_ID: "{{ .Values.configuration.sso.fusionauth.clientId }}"
+      FUSIONAUTH_CLIENT_SECRET: "{{ .Values.configuration.sso.fusionauth.clientSecret }}"
+      FUSIONAUTH_ISSUER: "{{ .Values.configuration.sso.fusionauth.issuer }}"
+      FUSIONAUTH_TENANT_ID: "{{ .Values.configuration.sso.fusionauth.tenantId }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.github.enabled }}
+      NEXT_PUBLIC_GITHUB_ENABLED: "true"
+      GITHUB_CUSTOM_NAME: "{{ .Values.configuration.sso.github.customName }}"
+      GITHUB_ID: "{{ .Values.configuration.sso.github.clientId }}"
+      GITHUB_SECRET: "{{ .Values.configuration.sso.github.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.gitlab.enabled }}
+      NEXT_PUBLIC_GITLAB_ENABLED: "true"
+      GITLAB_CUSTOM_NAME: "{{ .Values.configuration.sso.gitlab.customName }}"
+      GITLAB_CLIENT_ID: "{{ .Values.configuration.sso.gitlab.clientId }}"
+      GITLAB_CLIENT_SECRET: "{{ .Values.configuration.sso.gitlab.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.google.enabled }}
+      NEXT_PUBLIC_GOOGLE_ENABLED: "true"
+      GOOGLE_CUSTOM_NAME: "{{ .Values.configuration.sso.google.customName }}"
+      GOOGLE_CLIENT_ID: "{{ .Values.configuration.sso.google.clientId }}"
+      GOOGLE_CLIENT_SECRET: "{{ .Values.configuration.sso.google.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.hubspot.enabled }}
+      NEXT_PUBLIC_HUBSPOT_ENABLED: "true"
+      HUBSPOT_CUSTOM_NAME: "{{ .Values.configuration.sso.hubspot.customName }}"
+      HUBSPOT_CLIENT_ID: "{{ .Values.configuration.sso.hubspot.clientId }}"
+      HUBSPOT_CLIENT_SECRET: "{{ .Values.configuration.sso.hubspot.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.ids4.enabled }}
+      NEXT_PUBLIC_IDS4_ENABLED: "true"
+      IDS4_CUSTOM_NAME: "{{ .Values.configuration.sso.ids4.customName }}"
+      IDS4_CLIENT_ID: "{{ .Values.configuration.sso.ids4.clientId }}"
+      IDS4_CLIENT_SECRET: "{{ .Values.configuration.sso.ids4.clientSecret }}"
+      IDS4_ISSUER: "{{ .Values.configuration.sso.ids4.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.kakao.enabled }}
+      NEXT_PUBLIC_KAKAO_ENABLED: "true"
+      KAKAO_CUSTOM_NAME: "{{ .Values.configuration.sso.kakao.customName }}"
+      KAKAO_CLIENT_ID: "{{ .Values.configuration.sso.kakao.clientId }}"
+      KAKAO_CLIENT_SECRET: "{{ .Values.configuration.sso.kakao.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.keycloak.enabled }}
+      NEXT_PUBLIC_KEYCLOAK_ENABLED: "true"
+      KEYCLOAK_CUSTOM_NAME: "{{ .Values.configuration.sso.keycloak.customName }}"
+      KEYCLOAK_ISSUER: "{{ .Values.configuration.sso.keycloak.issuer }}"
+      KEYCLOAK_CLIENT_ID: "{{ .Values.configuration.sso.keycloak.clientId }}"
+      KEYCLOAK_CLIENT_SECRET: "{{ .Values.configuration.sso.keycloak.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.line.enabled }}
+      NEXT_PUBLIC_LINE_ENABLED: "true"
+      LINE_CUSTOM_NAME: "{{ .Values.configuration.sso.line.customName }}"
+      LINE_CLIENT_ID: "{{ .Values.configuration.sso.line.clientId }}"
+      LINE_CLIENT_SECRET: "{{ .Values.configuration.sso.line.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.linkedin.enabled }}
+      NEXT_PUBLIC_LINKEDIN_ENABLED: "true"
+      LINKEDIN_CUSTOM_NAME: "{{ .Values.configuration.sso.linkedin.customName }}"
+      LINKEDIN_CLIENT_ID: "{{ .Values.configuration.sso.linkedin.clientId }}"
+      LINKEDIN_CLIENT_SECRET: "{{ .Values.configuration.sso.linkedin.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.mailchimp.enabled }}
+      NEXT_PUBLIC_MAILCHIMP_ENABLED: "true"
+      MAILCHIMP_CUSTOM_NAME: "{{ .Values.configuration.sso.mailchimp.customName }}"
+      MAILCHIMP_CLIENT_ID: "{{ .Values.configuration.sso.mailchimp.clientId }}"
+      MAILCHIMP_CLIENT_SECRET: "{{ .Values.configuration.sso.mailchimp.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.mailru.enabled }}
+      NEXT_PUBLIC_MAILRU_ENABLED: "true"
+      MAILRU_CUSTOM_NAME: "{{ .Values.configuration.sso.mailru.customName }}"
+      MAILRU_CLIENT_ID: "{{ .Values.configuration.sso.mailru.clientId }}"
+      MAILRU_CLIENT_SECRET: "{{ .Values.configuration.sso.mailru.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.naver.enabled }}
+      NEXT_PUBLIC_NAVER_ENABLED: "true"
+      NAVER_CUSTOM_NAME: "{{ .Values.configuration.sso.naver.customName }}"
+      NAVER_CLIENT_ID: "{{ .Values.configuration.sso.naver.clientId }}"
+      NAVER_CLIENT_SECRET: "{{ .Values.configuration.sso.naver.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.netlify.enabled }}
+      NEXT_PUBLIC_NETLIFY_ENABLED: "true"
+      NETLIFY_CUSTOM_NAME: "{{ .Values.configuration.sso.netlify.customName }}"
+      NETLIFY_CLIENT_ID: "{{ .Values.configuration.sso.netlify.clientId }}"
+      NETLIFY_CLIENT_SECRET: "{{ .Values.configuration.sso.netlify.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.okta.enabled }}
+      NEXT_PUBLIC_OKTA_ENABLED: "true"
+      OKTA_CUSTOM_NAME: "{{ .Values.configuration.sso.okta.customName }}"
+      OKTA_CLIENT_ID: "{{ .Values.configuration.sso.okta.clientId }}"
+      OKTA_CLIENT_SECRET: "{{ .Values.configuration.sso.okta.clientSecret }}"
+      OKTA_ISSUER: "{{ .Values.configuration.sso.okta.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.onelogin.enabled }}
+      NEXT_PUBLIC_ONELOGIN_ENABLED: "true"
+      ONELOGIN_CUSTOM_NAME: "{{ .Values.configuration.sso.onelogin.customName }}"
+      ONELOGIN_CLIENT_ID: "{{ .Values.configuration.sso.onelogin.clientId }}"
+      ONELOGIN_CLIENT_SECRET: "{{ .Values.configuration.sso.onelogin.clientSecret }}"
+      ONELOGIN_ISSUER: "{{ .Values.configuration.sso.onelogin.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.osso.enabled }}
+      NEXT_PUBLIC_OSSO_ENABLED: "true"
+      OSSO_CUSTOM_NAME: "{{ .Values.configuration.sso.osso.customName }}"
+      OSSO_CLIENT_ID: "{{ .Values.configuration.sso.osso.clientId }}"
+      OSSO_CLIENT_SECRET: "{{ .Values.configuration.sso.osso.clientSecret }}"
+      OSSO_ISSUER: "{{ .Values.configuration.sso.osso.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.osu.enabled }}
+      NEXT_PUBLIC_OSU_ENABLED: "true"
+      OSU_CUSTOM_NAME: "{{ .Values.configuration.sso.osu.customName }}"
+      OSU_CLIENT_ID: "{{ .Values.configuration.sso.osu.clientId }}"
+      OSU_CLIENT_SECRET: "{{ .Values.configuration.sso.osu.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.patreon.enabled }}
+      NEXT_PUBLIC_PATREON_ENABLED: "true"
+      PATREON_CUSTOM_NAME: "{{ .Values.configuration.sso.patreon.customName }}"
+      PATREON_CLIENT_ID: "{{ .Values.configuration.sso.patreon.clientId }}"
+      PATREON_CLIENT_SECRET: "{{ .Values.configuration.sso.patreon.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.pinterest.enabled }}
+      NEXT_PUBLIC_PINTEREST_ENABLED: "true"
+      PINTEREST_CUSTOM_NAME: "{{ .Values.configuration.sso.pinterest.customName }}"
+      PINTEREST_CLIENT_ID: "{{ .Values.configuration.sso.pinterest.clientId }}"
+      PINTEREST_CLIENT_SECRET: "{{ .Values.configuration.sso.pinterest.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.pipedrive.enabled }}
+      NEXT_PUBLIC_PIPEDRIVE_ENABLED: "true"
+      PIPEDRIVE_CUSTOM_NAME: "{{ .Values.configuration.sso.pipedrive.customName }}"
+      PIPEDRIVE_CLIENT_ID: "{{ .Values.configuration.sso.pipedrive.clientId }}"
+      PIPEDRIVE_CLIENT_SECRET: "{{ .Values.configuration.sso.pipedrive.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.reddit.enabled }}
+      NEXT_PUBLIC_REDDIT_ENABLED: "true"
+      REDDIT_CUSTOM_NAME: "{{ .Values.configuration.sso.reddit.customName }}"
+      REDDIT_CLIENT_ID: "{{ .Values.configuration.sso.reddit.clientId }}"
+      REDDIT_CLIENT_SECRET: "{{ .Values.configuration.sso.reddit.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.salesforce.enabled }}
+      NEXT_PUBLIC_SALESFORCE_ENABLED: "true"
+      SALESFORCE_CUSTOM_NAME: "{{ .Values.configuration.sso.salesforce.customName }}"
+      SALESFORCE_CLIENT_ID: "{{ .Values.configuration.sso.salesforce.clientId }}"
+      SALESFORCE_CLIENT_SECRET: "{{ .Values.configuration.sso.salesforce.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.slack.enabled }}
+      NEXT_PUBLIC_SLACK_ENABLED: "true"
+      SLACK_CUSTOM_NAME: "{{ .Values.configuration.sso.slack.customName }}"
+      SLACK_CLIENT_ID: "{{ .Values.configuration.sso.slack.clientId }}"
+      SLACK_CLIENT_SECRET: "{{ .Values.configuration.sso.slack.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.spotify.enabled }}
+      NEXT_PUBLIC_SPOTIFY_ENABLED: "true"
+      SPOTIFY_CUSTOM_NAME: "{{ .Values.configuration.sso.spotify.customName }}"
+      SPOTIFY_CLIENT_ID: "{{ .Values.configuration.sso.spotify.clientId }}"
+      SPOTIFY_CLIENT_SECRET: "{{ .Values.configuration.sso.spotify.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.strava.enabled }}
+      NEXT_PUBLIC_STRAVA_ENABLED: "true"
+      STRAVA_CUSTOM_NAME: "{{ .Values.configuration.sso.strava.customName }}"
+      STRAVA_CLIENT_ID: "{{ .Values.configuration.sso.strava.clientId }}"
+      STRAVA_CLIENT_SECRET: "{{ .Values.configuration.sso.strava.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.todoist.enabled }}
+      NEXT_PUBLIC_TODOIST_ENABLED: "true"
+      TODOIST_CUSTOM_NAME: "{{ .Values.configuration.sso.todoist.customName }}"
+      TODOIST_CLIENT_ID: "{{ .Values.configuration.sso.todoist.clientId }}"
+      TODOIST_CLIENT_SECRET: "{{ .Values.configuration.sso.todoist.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.twitch.enabled }}
+      NEXT_PUBLIC_TWITCH_ENABLED: "true"
+      TWITCH_CUSTOM_NAME: "{{ .Values.configuration.sso.twitch.customName }}"
+      TWITCH_CLIENT_ID: "{{ .Values.configuration.sso.twitch.clientId }}"
+      TWITCH_CLIENT_SECRET: "{{ .Values.configuration.sso.twitch.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.unitedEffects.enabled }}
+      NEXT_PUBLIC_UNITED_EFFECTS_ENABLED: "true"
+      UNITED_EFFECTS_CUSTOM_NAME: "{{ .Values.configuration.sso.unitedEffects.customName }}"
+      UNITED_EFFECTS_CLIENT_ID: "{{ .Values.configuration.sso.unitedEffects.clientId }}"
+      UNITED_EFFECTS_CLIENT_SECRET: "{{ .Values.configuration.sso.unitedEffects.clientSecret }}"
+      UNITED_EFFECTS_ISSUER: "{{ .Values.configuration.sso.unitedEffects.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.vk.enabled }}
+      NEXT_PUBLIC_VK_ENABLED: "true"
+      VK_CUSTOM_NAME: "{{ .Values.configuration.sso.vk.customName }}"
+      VK_CLIENT_ID: "{{ .Values.configuration.sso.vk.clientId }}"
+      VK_CLIENT_SECRET: "{{ .Values.configuration.sso.vk.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.wikimedia.enabled }}
+      NEXT_PUBLIC_WIKIMEDIA_ENABLED: "true"
+      WIKIMEDIA_CUSTOM_NAME: "{{ .Values.configuration.sso.wikimedia.customName }}"
+      WIKIMEDIA_CLIENT_ID: "{{ .Values.configuration.sso.wikimedia.clientId }}"
+      WIKIMEDIA_CLIENT_SECRET: "{{ .Values.configuration.sso.wikimedia.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.wordpress.enabled }}
+      NEXT_PUBLIC_WORDPRESS_ENABLED: "true"
+      WORDPRESS_CUSTOM_NAME: "{{ .Values.configuration.sso.wordpress.customName }}"
+      WORDPRESS_CLIENT_ID: "{{ .Values.configuration.sso.wordpress.clientId }}"
+      WORDPRESS_CLIENT_SECRET: "{{ .Values.configuration.sso.wordpress.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.yandex.enabled }}
+      NEXT_PUBLIC_YANDEX_ENABLED: "true"
+      YANDEX_CUSTOM_NAME: "{{ .Values.configuration.sso.yandex.customName }}"
+      YANDEX_CLIENT_ID: "{{ .Values.configuration.sso.yandex.clientId }}"
+      YANDEX_CLIENT_SECRET: "{{ .Values.configuration.sso.yandex.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.zitadel.enabled }}
+      NEXT_PUBLIC_ZITADEL_ENABLED: "true"
+      ZITADEL_CUSTOM_NAME: "{{ .Values.configuration.sso.zitadel.customName }}"
+      ZITADEL_CLIENT_ID: "{{ .Values.configuration.sso.zitadel.clientId }}"
+      ZITADEL_CLIENT_SECRET: "{{ .Values.configuration.sso.zitadel.clientSecret }}"
+      ZITADEL_ISSUER: "{{ .Values.configuration.sso.zitadel.issuer }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.zoho.enabled }}
+      NEXT_PUBLIC_ZOHO_ENABLED: "true"
+      ZOHO_CUSTOM_NAME: "{{ .Values.configuration.sso.zoho.customName }}"
+      ZOHO_CLIENT_ID: "{{ .Values.configuration.sso.zoho.clientId }}"
+      ZOHO_CLIENT_SECRET: "{{ .Values.configuration.sso.zoho.clientSecret }}"
+      {{- end }}
+
+      {{- if .Values.configuration.sso.zoom.enabled }}
+      NEXT_PUBLIC_ZOOM_ENABLED: "true"
+      ZOOM_CUSTOM_NAME: "{{ .Values.configuration.sso.zoom.customName }}"
+      ZOOM_CLIENT_ID: "{{ .Values.configuration.sso.zoom.clientId }}"
+      ZOOM_CLIENT_SECRET: "{{ .Values.configuration.sso.zoom.clientSecret }}"
+      {{- end }}
+  {{- end }}
