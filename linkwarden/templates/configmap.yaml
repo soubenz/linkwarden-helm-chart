@@ -6,10 +6,6 @@ metadata:
     {{- include "linkwarden.labels" . | nindent 4 }}
 data:
   NEXTAUTH_URL: "{{ .Values.configuration.authentication.authURL }}"
-  # Manual installation database settings
-  DATABASE_URL: ""
-  # Docker installation database settings
-  POSTGRES_PASSWORD: ""
   # Additional Optional Settings
   PAGINATION_TAKE_COUNT: "{{ .Values.configuration.paginationTakeCount }}"
   STORAGE_FOLDER: "{{ .Values.configuration.storageFolder }}"

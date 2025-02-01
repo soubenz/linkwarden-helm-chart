@@ -18,8 +18,13 @@ This Helm chart deploys the Linkwarden application on a Kubernetes cluster.
 
 2. **Install the chart:**
 
+To safely encrypt tokens and email hashes, you need a NextAuth secret.
+
+To create one, you can use openssl rand -base64 33.
+
+
     ```sh
-    helm install my-linkwarden linkwarden/linkwarden
+    helm install my-linkwarden linkwarden/linkwarden --set configuration.authentication.authSecret=your_secret_here
     ```
 
     Replace `my-linkwarden` with the name you want to give to your Helm release.
@@ -63,13 +68,13 @@ The following table lists the configurable parameters of the Linkwarden chart an
 | `nodeSelector`                            | Node selector                                                               | `{}`                                         |
 | `tolerations`                             | Tolerations                                                                 | `[]`                                         |
 | `affinity`                                | Affinity                                                                    | `{}`                                         |
-| `configuration.paginationTakeCount`       | Pagination take count                                                       | `""`                                         |
-| `configuration.storageFolder`             | Storage folder                                                              | `""`                                         |
-| `configuration.autoscrollTimeout`         | Autoscroll timeout                                                          | `""`                                         |
-| `configuration.publicDisableRegistration` | Disable public registration                                                 | `""`                                         |
-| `configuration.publicCredentialsEnabled`  | Enable public credentials                                                    | `""`                                         |
-| `configuration.disableNewSSOUsers`        | Disable new SSO users                                                       | `""`                                         |
-| `configuration.reArchiveLimit`            | Re-archive limit                                                            | `""`                                         |
+| `configuration.paginationTakeCount`       | The numbers of Links to fetch every time you reach the bottom of the webpage                                                       | `""`                                         |
+| `configuration.storageFolder`             | The folder to store your Screenshots, PDFs, and profile photos.                                                              | `""`                                         |
+| `configuration.autoscrollTimeout`         | The amount of time to wait for the website to be archived (in seconds).                                                          | `""`                                         |
+| `configuration.publicDisableRegistration` | If set to true, registration will be disabled.                                                 | `""`                                         |
+| `configuration.publicCredentialsEnabled`  | If set to true, users will be able to login with username and password.                                                    | `""`                                         |
+| `configuration.disableNewSSOUsers`        | If set to true, new users will not be able to login with SSO.                                                       | `""`                                         |
+| `configuration.reArchiveLimit`            | Adjusts how often a user can trigger a new archive for each link (in minutes).                                                            | `""`                                         |
 | `configuration.maxLinksPerUser`           | Maximum links per user                                                      | `""`                                         |
 | `configuration.archiveTakeCount`          | Archive take count                                                          | `""`                                         |
 | `configuration.browserTimeout`            | Browser timeout                                                             | `""`                                         |
@@ -146,4 +151,7 @@ The following table lists the configurable parameters of the Linkwarden chart an
 | `configuration.sso.cognito.customName`    | Cognito custom name                                                         | `""`                                         |
 | `configuration.sso.cognito.issuer`        | Cognito issuer                                                              | `""`                                         |
 | `configuration.sso.coinbase.enabled`      | Enable Coinbase SSO                                                         | `false`                                      |
-| `configuration.sso.coinbase.clientId`     | Coinbase client ID
+| `configuration.smtp.emailProvider`     | If set to true, email will be enabled and you'll need to define the next two variables below.
+| `configuration.smtp.emailFrom`     | The email that will send the verification emails.
+| `configuration.smtp.emailServer`     | That sensitive string that starts with smtp://... .
+ 
