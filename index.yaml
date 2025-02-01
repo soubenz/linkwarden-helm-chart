@@ -3,6 +3,21 @@ entries:
   linkwarden:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-02-01T11:06:12.350098326Z"
+    dependencies:
+    - condition: postgres.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.4.5
+    description: A Helm chart for Kubernetes
+    digest: b9c972a483fb8caa2f432f5cbfc0a70e65ab7d4bb9a483e7ce73c0abb3b0c695
+    name: linkwarden
+    type: application
+    urls:
+    - https://github.com/soubenz/linkwarden-helm-chart/releases/download/linkwarden-0.1.1/linkwarden-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-02-01T10:30:01.666417608Z"
     dependencies:
     - condition: postgres.enabled
@@ -16,4 +31,4 @@ entries:
     urls:
     - https://github.com/soubenz/linkwarden-helm-chart/releases/download/linkwarden-0.1.0/linkwarden-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-01T10:30:01.666426094Z"
+generated: "2025-02-01T11:06:12.350111231Z"
