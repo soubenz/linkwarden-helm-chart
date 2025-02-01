@@ -33,23 +33,22 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ include "linkwarden.fullname" . }}-config
+                name: {{ include "linkwarden.fullname" . }}
           env:
             - name: DATABASE_URL
               {{ if .Values.postgres.enabled }}
               value: 
                 "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
               {{ else }}
-              valueFrom:
-                
+              valueFrom:  
                 secretKeyRef:
-                  name: {{ include "linkwarden.fullname" . }}-secret
+                  name: {{ include "linkwarden.fullname" . }}
                   key: externalPostgresUri
               {{ end }}
             - name: AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "linkwarden.fullname" . }}-secret
+                  name: {{ include "linkwarden.fullname" . }}
                   key: authSecret
           ports:
             - name: http

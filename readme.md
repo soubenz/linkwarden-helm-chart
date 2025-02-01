@@ -12,7 +12,7 @@ This Helm chart deploys the Linkwarden application on a Kubernetes cluster.
 1. **Add the Helm repository:**
 
     ```sh
-    helm repo add linkwarden https://your-helm-repo-url
+    helm repo add linkwarden https://soubenz.github.io/linkwarden-helm-chart/
     helm repo update
     ```
 
