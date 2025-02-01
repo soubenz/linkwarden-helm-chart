@@ -54,9 +54,6 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          volumeMounts:
-            - name: data
-              mountPath: /data/data
           livenessProbe:
             httpGet:
               path: /
