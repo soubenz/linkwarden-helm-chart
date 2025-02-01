@@ -415,7 +415,7 @@ configuration:
     disableRegistration: false
     PublicCredentialsEnabled: true
     disableNewSSOUsers: true
-    authURL: ""
+    authURL: "http://localhost:3000/api/v1/auth"
     authSecret: ""
 
   smtp:
