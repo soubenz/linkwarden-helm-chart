@@ -85,8 +85,8 @@ persistence:
   size: "1Gi"
 
 configuration:
+  storageFolder: "/data"
   paginationTakeCount: ""
-  storageFolder: ""
   autoscrollTimeout: ""
   publicDisableRegistration: ""
   publicCredentialsEnabled: ""
