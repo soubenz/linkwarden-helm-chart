@@ -45,7 +45,7 @@ spec:
                   name: {{ include "linkwarden.fullname" . }}
                   key: externalPostgresUri
               {{ end }}
-            - name: AUTH_SECRET
+            - name: NEXTAUTH_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ include "linkwarden.fullname" . }}
