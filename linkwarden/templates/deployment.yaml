@@ -41,6 +41,7 @@ spec:
                 "postgresql://{{ .Values.postgres.username }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
               {{ else }}
               valueFrom:
+                
                 secretKeyRef:
                   name: {{ include "linkwarden.fullname" . }}-secret
                   key: externalPostgresUri
@@ -68,9 +69,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: data-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
