@@ -67,7 +67,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - name: data
-              mountPath: {{ .Values.configuration.storagePath }}
+              mountPath: {{ .Values.configuration.storageFolder }}
             {{- end }}
       volumes:
         {{- if .Values.persistence.enabled }}
