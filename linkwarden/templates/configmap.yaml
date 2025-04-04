@@ -40,8 +40,8 @@ data:
 
   # AI Settings
   {{- if .Values.configuration.ai.enabled }}
-    NEXT_PUBLIC_OLLAMA_ENDPOINT_URL: "{{ .Values.configuration.ai.ollamaEndpointUrl }}"
-    OLLAMA_MODEL: "{{ .Values.configuration.ai.ollamaModel }}"
+  NEXT_PUBLIC_OLLAMA_ENDPOINT_URL: "{{ .Values.configuration.ai.ollamaEndpointUrl }}"
+  OLLAMA_MODEL: "{{ .Values.configuration.ai.ollamaModel }}"
   {{- end }}
   # AWS S3 Settings
   SPACES_KEY: ""
@@ -53,10 +53,10 @@ data:
 
   # SMTP Settings
   {{- if .Values.configuration.smtp.enabled }}
-    NEXT_PUBLIC_EMAIL_PROVIDER: "{{ .Values.configuration.smtp.emailProvider }}"
-    EMAIL_FROM: "{{ .Values.configuration.smtp.emailFrom }}"
-    EMAIL_SERVER: "{{ .Values.configuration.smtp.emailServer }}"
-    BASE_URL: "{{ .Values.configuration.smtp.baseUrl }}"
+  NEXT_PUBLIC_EMAIL_PROVIDER: "{{ .Values.configuration.smtp.emailProvider }}"
+  EMAIL_FROM: "{{ .Values.configuration.smtp.emailFrom }}"
+  EMAIL_SERVER: "{{ .Values.configuration.smtp.emailServer }}"
+  BASE_URL: "{{ .Values.configuration.smtp.baseUrl }}"
   {{- end }}
   # Proxy settings
   PROXY: ""
