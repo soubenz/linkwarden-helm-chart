@@ -74,6 +74,7 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "linkwarden.fullname" . }}-pvc
+            subPath: data
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
