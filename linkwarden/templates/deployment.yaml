@@ -68,13 +68,13 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: data
               mountPath: {{ .Values.configuration.storageFolder }}
+              subPath: data
             {{- end }}
       volumes:
         {{- if .Values.persistence.enabled }}
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "linkwarden.fullname" . }}-pvc
-            subPath: data
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
